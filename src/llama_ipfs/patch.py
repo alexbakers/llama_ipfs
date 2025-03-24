@@ -51,24 +51,20 @@ IPFS_CACHE_DIR = os.path.join(os.path.expanduser("~"), ".cache", "ipfs", "models
 os.makedirs(IPFS_CACHE_DIR, exist_ok=True)
 
 
-def is_active() -> bool:
-    """Check if the llama-cpp-python patch is active.
+def is_active():
+    """Check if the llama_ipfs integration is active."""
+    # First check for the import hook
+    if hasattr(builtins.__import__, '_llama_ipfs_hook'):
+        # Then check for specific patched methods in llama_cpp
+        try:
+            import llama_cpp
+            if hasattr(llama_cpp, 'Llama') and hasattr(llama_cpp.Llama, 'from_pretrained'):
+                return True
+        except (ImportError, AttributeError):
+            pass
 
-    Returns:
-        True if the patch has been applied, False otherwise
-    """
-    # Check if llama_cpp is imported and has a patched Llama class
-    if "llama_cpp" in sys.modules:
-        llama_module = sys.modules["llama_cpp"]
-        if (
-            hasattr(llama_module, "Llama")
-            and hasattr(llama_module.Llama, "from_pretrained")
-            and hasattr(llama_module.Llama.from_pretrained, "_is_patched")
-        ):
-            return True
-
-    # Use the module-level flag as a fallback
-    return _LLAMA_CPP_PATCHED
+    # Check for _PATCHED_METHODS as fallback
+    return bool(_PATCHED_METHODS)
 
 
 def is_transformers_context():

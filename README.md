@@ -47,10 +47,10 @@ In Google Colab, you need to manually apply the patch after importing:
 ```python
 # Import and manually apply patch
 import llama_ipfs
-llama_ipfs.apply_patch()
+llama_ipfs.activate()
 
 # Verify patch is active
-print(f"IPFS patch active: {llama_ipfs.is_active()}")
+print(f"IPFS patch active: {llama_ipfs.status()}")
 ```
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/alexbakers/llama_ipfs/blob/main/examples/colab/llama_ipfs_example.ipynb)

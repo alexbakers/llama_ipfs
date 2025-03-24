@@ -18,6 +18,17 @@ if "llama-ipfs" in script_name or "llama_ipfs" in script_name:
     CLI_MODE = True
 
 
+# CLI-compatible function names
+def activate(show_message=True):
+    """Activate the llama-ipfs integration (CLI-compatible)"""
+    return apply_patch(show_message=show_message)
+
+
+def status():
+    """Check if llama-ipfs integration is active (CLI-compatible)"""
+    return is_active()
+
+
 # Cleanup function to restore original functionality when Python exits
 def _cleanup_patch():
     """Restore original import function and methods when Python exits."""
