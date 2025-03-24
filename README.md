@@ -40,6 +40,21 @@ response = model.create_completion(
 )
 ```
 
+## Google Colab Usage
+
+In Google Colab, you need to manually apply the patch after importing:
+
+```python
+# Import and manually apply patch
+import llama_ipfs
+llama_ipfs.apply_patch()
+
+# Verify patch is active
+print(f"IPFS patch active: {llama_ipfs.is_active()}")
+```
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/alexbakers/llama_ipfs/blob/main/examples/colab/llama_ipfs_example.ipynb)
+
 ## IPFS Node Connectivity
 
 The `llama_ipfs` package prioritizes connectivity in the following order:
