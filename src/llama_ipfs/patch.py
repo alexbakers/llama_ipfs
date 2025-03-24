@@ -44,7 +44,7 @@ _CURRENTLY_IMPORTING = False
 _ORIGINAL_FROM_PRETRAINED = None
 
 # Dictionary to track patched methods for cleanup
-_PATCHED_METHODS = {}
+_PATCHED_METHODS: Dict[str, Callable] = {}
 
 # Cache directory for IPFS models
 IPFS_CACHE_DIR = os.path.join(os.path.expanduser("~"), ".cache", "ipfs", "models")
@@ -54,11 +54,14 @@ os.makedirs(IPFS_CACHE_DIR, exist_ok=True)
 def is_active():
     """Check if the llama_ipfs integration is active."""
     # First check for the import hook
-    if hasattr(builtins.__import__, '_llama_ipfs_hook'):
+    if hasattr(builtins.__import__, "_llama_ipfs_hook"):
         # Then check for specific patched methods in llama_cpp
         try:
             import llama_cpp
-            if hasattr(llama_cpp, 'Llama') and hasattr(llama_cpp.Llama, 'from_pretrained'):
+
+            if hasattr(llama_cpp, "Llama") and hasattr(
+                llama_cpp.Llama, "from_pretrained"
+            ):
                 return True
         except (ImportError, AttributeError):
             pass
