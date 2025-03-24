@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llama-ipfs"
+version = "0.1.0"
+description = "Enable IPFS model loading for llama-cpp-python"
+authors = [
+    {name = "Alex Baker", email = "alex.baker.fon@protonmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+keywords = ["llama-cpp-python", "ipfs", "utility"]
+dependencies = ["requests>=2.25.0"]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "mypy",
+    "pytest",
+    "flake8",
+]
+
+[project.scripts]
+llama-ipfs = "llama_ipfs.__main__:main"
+
+[project.urls]
+"Homepage" = "https://github.com/alexbakers/llama_ipfs"
+"Bug Tracker" = "https://github.com/alexbakers/llama_ipfs/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["llama_ipfs"]
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py" 
