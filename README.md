@@ -21,7 +21,8 @@ Once installed and activated, the `llama_ipfs` integration will be loaded automa
 
 ## Usage
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/alexbakers/llama_ipfs/blob/main/examples/colab/llama_ipfs_example.ipynb)
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/alexbakers/llama_ipfs/blob/main/examples/colab/llama_ipfs_example.ipynb)
+- 🤗 [Demo Space](https://huggingface.co/spaces/alexbakers/llama_ipfs)
 
 After installation, use llama-cpp-python with IPFS model URIs:
 
