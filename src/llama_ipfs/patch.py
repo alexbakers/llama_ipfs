@@ -335,6 +335,7 @@ def download_from_ipfs(
         gateways = [
             f"https://ipfs.io/ipfs/{cid}/{filename}",
             f"https://dweb.link/ipfs/{cid}/{filename}",
+            f"https://w3s.link/ipfs/{cid}/{filename}",
         ]
 
         print(f"📥 Downloading file from IPFS: {filename}")
@@ -697,6 +698,45 @@ def ensure_llama_model_requirements(model_dir: str, filename: str) -> None:
         model_dir: Path to the model directory
         filename: The main model filename
     """
-    # For now, llama-cpp doesn't need any additional files beyond the model file itself
-    # But we can add specific handling here if needed in the future
-    pass
+    # Extract the CID from the model directory path
+    cid = os.path.basename(model_dir)
+
+    # Check for common complementary files that might be needed
+    # Note: Most llama-cpp models are standalone files, but some might need additional files
+
+    # If this is a GGUF file, check for potential config files
+    if filename.endswith(".gguf"):
+        # Some models might have a config.json file
+        config_file = os.path.join(model_dir, "config.json")
+        if not os.path.exists(config_file):
+            try:
+                # Try to download from IPFS gateway
+                config_url = f"https://w3s.link/ipfs/{cid}/config.json"
+                print(f"   🔍 Checking for companion config.json file for GGUF model")
+
+                response = requests.get(config_url, timeout=10)
+                if response.status_code == 200:
+                    with open(config_file, "wb") as f:
+                        f.write(response.content)
+                    print(f"   ✅ Downloaded companion config.json file")
+            except Exception as e:
+                # It's fine if this fails - most GGUF models don't need a config.json
+                pass
+
+    # If there's a tokenizer.json file but no corresponding model JSON file, try to get it
+    tokenizer_path = os.path.join(model_dir, "tokenizer.json")
+    if os.path.exists(tokenizer_path) and not os.path.exists(
+        os.path.join(model_dir, "tokenizer_config.json")
+    ):
+        try:
+            config_url = f"https://w3s.link/ipfs/{cid}/tokenizer_config.json"
+            print(f"   🔍 Checking for companion tokenizer_config.json file")
+
+            response = requests.get(config_url, timeout=10)
+            if response.status_code == 200:
+                with open(os.path.join(model_dir, "tokenizer_config.json"), "wb") as f:
+                    f.write(response.content)
+                print(f"   ✅ Downloaded companion tokenizer_config.json file")
+        except Exception:
+            # It's fine if this fails too
+            pass

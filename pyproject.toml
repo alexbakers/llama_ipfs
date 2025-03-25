@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "llama-ipfs"
-version = "0.1.1"
+version = "0.2.0"
 description = "Enable IPFS model loading for llama-cpp-python"
 authors = [
     {name = "Alex Baker", email = "alex.baker.fon@protonmail.com"}
