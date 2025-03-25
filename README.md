@@ -13,7 +13,6 @@ Load models directly from IPFS for llama-cpp-python.
 ## Installation
 
 ```bash
-# Note: PyPI package names use hyphens
 pip install llama-ipfs
 llama-ipfs activate
 ```
@@ -22,6 +21,8 @@ Once installed and activated, the `llama_ipfs` integration will be loaded automa
 
 ## Usage
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/alexbakers/llama_ipfs/blob/main/examples/colab/llama_ipfs_example.ipynb)
+
 After installation, use llama-cpp-python with IPFS model URIs:
 
 ```python
@@ -29,31 +30,11 @@ from llama_cpp import Llama
 
 # Load a model directly from IPFS
 model = Llama.from_pretrained(
-    repo_id="ipfs://bafybeie7quk74kmqg34nl2ewdwmsrlvvt6heayien364gtu2x6g2qpznhq",
-    filename="ggml-model-Q4_K_M.gguf"
-)
-
-# Use the model normally
-response = model.create_completion(
-    "Once upon a time",
-    max_tokens=128
+    # Equivalent HuggingFace model: "aisuko/gpt2-117M-gguf"
+    repo_id = "ipfs://bafybeie7quk74kmqg34nl2ewdwmsrlvvt6heayien364gtu2x6g2qpznhq",
+    filename = "ggml-model-Q4_K_M.gguf"
 )
 ```
-
-## Google Colab Usage
-
-In Google Colab, you need to manually apply the patch after importing:
-
-```python
-# Import and manually apply patch
-import llama_ipfs
-llama_ipfs.activate()
-
-# Verify patch is active
-print(f"IPFS patch active: {llama_ipfs.status()}")
-```
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/alexbakers/llama_ipfs/blob/main/examples/colab/llama_ipfs_example.ipynb)
 
 ## IPFS Node Connectivity
 
@@ -75,7 +56,6 @@ The `llama_ipfs` package prioritizes connectivity in the following order:
 ## Command Line Interface
 
 ```bash
-# Note: CLI commands use hyphens
 # Activate the auto-loading
 llama-ipfs activate
 
