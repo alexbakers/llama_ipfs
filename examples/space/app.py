@@ -84,8 +84,7 @@ st.header("Question & Answer")
 # Input fields
 context = st.text_area(
     "Context",
-    value="France is a country in Western Europe known for its rich history and culture. "
-    "It is home to many famous landmarks including the Eiffel Tower. Its capital is Paris.",
+    value="France is a country.",
     height=150
 )
 
